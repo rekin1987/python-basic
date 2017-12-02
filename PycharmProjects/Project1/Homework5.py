@@ -3,9 +3,10 @@ def word_count(s):
 
     list = []
 
-    d['dsdsa',5]
+    d['dsdsa'] = 5
+    d['vvv'] = 5
 
-    d.get
+    print(d)
 
     for word in s.split():
         pass
