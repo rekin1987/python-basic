@@ -4,7 +4,9 @@ List of commands:'x' to exit,
 '+' to add,
 '-' to remove,
 'l' to show list
-'c' to clear list"""
+'c' to clear list
+'sn' to sort list by item name
+'sl' to sort list by item length"""
 
 
 def add_to_list(lst, *items):
@@ -31,11 +33,19 @@ def clear_list(lst):
     lst.clear()
 
 
+def sort_list(lst, type):
+    if (type == "sn"):
+        lst.sort()
+    elif (type == "sl"):
+        lst.sort(key=lambda x: len(x))
+
+
 def process_command(lst, cmd):
-    items = cmd[1:].split(",")
     if cmd.startswith('+'):
+        items = cmd[1:].split(",")
         add_to_list(lst, *items)
     elif cmd.startswith('-'):
+        items = cmd[1:].split(",")
         remove_from_list(lst, *items)
     elif cmd.startswith('l'):
         print_list(lst)
@@ -45,8 +55,13 @@ def process_command(lst, cmd):
         clear_list(lst)
     elif cmd.startswith('x'):
         return
+    elif cmd.startswith('sn') or cmd.startswith("sl"):
+        sort_list(lst, cmd[:2])
     else:
-        print(f"Unknown command {cmd[0]}")
+        if len(cmd) > 0:
+            print(f"Unknown command {cmd[0]}")
+        else:
+            print(f"Empty command. {inputPrompt}")
 
 
 def main():
@@ -55,9 +70,9 @@ def main():
     while in_ != 'x':
         in_ = input(inputPrompt)
         process_command(lst, in_)
+    print("Finished")
 
 
+# this makes sure the main() is started (without this we don't do anything by running this script)
 if __name__ == '__main__':
     main()
-
-print("Finished")
