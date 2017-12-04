@@ -1,41 +1,48 @@
-inputPrompt = "enter item ('x' to exit, '+' to add, '-' to remove, 'l' to show list)\n"
+inputPrompt = "Input your command! ('h' for help)\n"
+help = "Use 'h' to show this help. List of commands:\n'x' to exit,\n'+' to add,\n'-' to remove,\n'l' to show list\n"
 in_ = ' '
 
-list = []
+lst = []
 
-def checkInput(s):
-    if in_.startswith('+'):
-        substrList = in_[1:].split(',')
-        for substr in substrList:
-            if substr in list:
-                print(substr + " already on the list")
-            else:
-                list.append(substr.strip().lower())
-    elif in_.startswith('-'):
-        substrList = in_[1:].split(',')
-        for substr in substrList:
-            if substr not in list:
-                print(substr + " NOT on the list")
-            else:
-                list.remove(substr)
-    elif in_.startswith('l'):
-        print(list)
-        list2 = []
-        for item in list:
-            list2.append(item.capitalize())
-        print("List contains: %s" % list2)
-        print(f"List contains2: {list2}")
-    elif in_.startswith('x'):
-        pass
+
+def add_to_list(*items):
+    for item in items:
+        if item not in lst:
+            lst.append(item)
+        else:
+            print(f"Already on the list: {item}")
+
+
+def remove_from_list(*items):
+    for item in items:
+        if item in lst:
+            lst.remove(item)
+        else:
+            print(f"Not on the list: {item}")
+
+
+def print_list(items):
+    print(items)
+
+
+def process_command(cmd):
+    items = cmd[1:].split(",")
+    if cmd.startswith('+'):
+        add_to_list(*items)
+    elif cmd.startswith('-'):
+        remove_from_list(*items)
+    elif cmd.startswith('l'):
+        print_list(lst)
+    elif cmd.startswith('h'):
+        print(help)
+    elif cmd.startswith('x'):
+        return
     else:
-        print("wrong starting char")
-
-
+        print(f"Unknown command {cmd[0]}")
 
 
 while in_ != 'x':
     in_ = input(inputPrompt)
-    checkInput(in_)
+    process_command(in_)
 
-
-print("finished")
+print("Finished")
