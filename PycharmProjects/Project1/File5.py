@@ -1,11 +1,9 @@
-
 inputPrompt = "enter item ('x' to exit, '+' to add, '-' to remove, 'l' to show list)\n"
 in_ = ' '
 
 list = []
 
-while in_ != 'x':
-    in_ = input(inputPrompt)
+def checkInput(s):
     if in_.startswith('+'):
         substrList = in_[1:].split(',')
         for substr in substrList:
@@ -31,5 +29,13 @@ while in_ != 'x':
         pass
     else:
         print("wrong starting char")
+
+
+
+
+while in_ != 'x':
+    in_ = input(inputPrompt)
+    checkInput(in_)
+
 
 print("finished")
